@@ -21,7 +21,7 @@ pipeline {
         sh 'mvn test'
       }
     }
-     stage('Docker image'){
+     stage('Deploy image'){
       steps {   
         script {
         docker.build registry + ":$BUILD_NUMBER"
