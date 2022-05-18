@@ -21,12 +21,21 @@ pipeline {
         sh 'mvn test'
       }
     }
-     stage('Deploy'){
+     stage('Docker image'){
       steps {   
         script {
         docker.build registry + ":$BUILD_NUMBER"
       }
     }
    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
   }
 }
